@@ -1,0 +1,34 @@
+
+
+in the liveview that you will be using to take the check-in details :
+
+implement reactor.run/4
+
+ case Reactor.run(TranscribeAudio, %{
+           audio_url:
+             SimpleS3Upload.get_file_url(
+               "audio/#{file.original_filename}",
+               "songanote",
+               7200
+             ),
+           organization_id: Map.get(params, "organization_id"),
+           file: file,
+           user: socket.assigns.current_user,
+           name: Map.get(params, "name")
+         }) do
+      {:ok, workspace} ->
+        send_update(__MODULE__,
+          id: socket.assigns.form_name,
+          update: :toggle_submit,
+          value: false
+        )
+
+
+Our reactor module will look like mod.ex
+   and each step will look like step.ex
+
+
+Each reactor step will have a run and undo function
+the undo function will be executed in case any of the 
+steps in the DAG fail which literally means the transaction would leave a db in an 
+inconsistent state
