@@ -32,3 +32,8 @@ Each reactor step will have a run and undo function
 the undo function will be executed in case any of the 
 steps in the DAG fail which literally means the transaction would leave a db in an 
 inconsistent state
+
+file.ex provides an overview of what it looks like to store file details in a database 
+
+a file will be stored as an embedded resource in the main db
+which means it will be stored as a map
